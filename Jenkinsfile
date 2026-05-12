@@ -123,33 +123,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'github-token-id', 
                                  passwordVariable: 'GIT_PASSWORD', 
                                  usernameVariable: 'GIT_USERNAME')]) {
-                    
-                    sh '''#!/bin/bash
-                        # 1. Configure Git to know WHO is pushing
-                        git config user.email "healer-agent@jenkins.local"
-                        git config user.name "AI Healer Agent"
-                        
-                        # 2. Inject credentials into the remote URL dynamically
-                        AUTH_REPO_URL=$(echo $GIT_URL | sed "s|https://|https://${GIT_USERNAME}:${GIT_PASSWORD}@|")
-                        git remote set-url origin $AUTH_REPO_URL
-
-                        # ==========================================
-                        # 3. FETCH THE MASTER AGENT ("THE BRAIN")
-                        # ==========================================
-                        echo "🧠 Fetching Centralized SRE Agent..."
-                        rm -rf sre_brain
-                        
-                        # ⚠️ REPLACE THIS URL with your actual Master Agent repo URL!
-                        git clone https://github.com/Akhilgit2004/Healer_agent_main.git sre_brain
-                        
-                        # 4. Ensure virtual environment exists and install agent dependencies
-                        if [ ! -d "venv" ]; then
-                            python3 -m venv venv
-                        fi
-                        ./venv/bin/pip install -r sre_brain/requirements.txt
-                        
-                        # 5. Trigger Hybrid Healer from the cloned folder, passing the local log
-                        ./venv/bin/python3 -u sre_brain/healer.py --log_file current_build.log
+                    sh '''
+                        git clone https://github.com/Akhilgit2004/healer_agent_main.git sre_brain
                     '''
                 }
             }
