@@ -140,7 +140,7 @@ pipeline {
                         rm -rf sre_brain
                         
                         # ⚠️ REPLACE THIS URL with your actual Master Agent repo URL!
-                        git clone https://github.com/Akhilgit2004/Healer_agent_main/tree/main sre_brain
+                        git clone https://github.com/Akhilgit2004/Healer_agent_main.git sre_brain
                         
                         # 4. Ensure virtual environment exists and install agent dependencies
                         if [ ! -d "venv" ]; then
