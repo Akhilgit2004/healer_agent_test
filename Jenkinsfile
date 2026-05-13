@@ -112,7 +112,7 @@ pipeline {
             script {
                 // 1. Capture the ACTUAL log of this current build directly from Jenkins
                 // (Note: If this throws a Sandbox error, ensure you approved 'getRawBuild' in Jenkins settings)
-                def currentLog = currentBuild.rawBuild.getLog(2000).join("\n")
+                def currentLog = currentBuild.getLog(2000).join("\n")
                 
                 // 2. Save it to a local file the agent can read
                 writeFile file: 'current_build.log', text: currentLog
